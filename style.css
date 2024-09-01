@@ -738,6 +738,7 @@ div#shimmer-wrapper {
 
   .product-area .products-list .sort-and-result {
     display: block;
+    position: relative;
   }
 
   .header-area .mobile-nav {
@@ -1006,8 +1007,21 @@ div#shimmer-wrapper {
   }
 
 
-  .product-area .products-list .sort-and-result .sort-filter {
+  .product-area .products-list .sort-and-result .sort-filter>* {
     display: none;
+  }
+
+  .product-area .products-list .sort-and-result .sort-filter select#sortingProducts {
+    display: block;
+    position: absolute;
+    bottom: 62px;
+    right: 0px;
+    width: max-content;
+    padding: 0 20px 0;
+    border: 0;
+    text-decoration: underline;
+    background: transparent;
+    font-weight: 600;
   }
 }
 
