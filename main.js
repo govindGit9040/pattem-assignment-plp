@@ -9,10 +9,18 @@ const itemsPerPage = 10;
 const productListArea = document.getElementById("product-grid-area");
 const shimmerWrapper = document.getElementById("shimmer-wrapper");
 const productCount = document.getElementById("result-count");
+const resultCount = document.getElementById("resultNumber");
 const sortingDropdown = document.getElementById("sortingProducts");
 const categoryCheckboxes = document.querySelectorAll(".category-checkbox");
 const loadMoreBtn = document.getElementById("load-more-btn");
 const searchBar = document.getElementById("search-by-title");
+const MobSearchBar = document.getElementById("m-search-by-title");
+const openSidebarBtn = document.getElementById('filter-result');
+const closeSidebarBtn = document.getElementById('closeSidebar');
+const filterSidebar = document.getElementById('filter-sidebar');
+const clearFiltersBtn = document.getElementById("clearAllFilter");
+const seeResult = document.getElementById("see-result");
+
 
 async function fetchData() {
   try {
@@ -55,12 +63,41 @@ async function fetchData() {
 
     // Added event listner search for product on title
     searchBar.addEventListener("input", searchProducts);
+     // Added event listner search for product on title
+    MobSearchBar.addEventListener("input", MobileSearchProducts);
+
+   
   } catch (error) {
     // we are handling error with proper message to show the exact error cause by calling this function
     handleError(error);
   }
 }
+openSidebarBtn.addEventListener('click', () => {
+  filterSidebar.classList.add('open');
+});
 
+closeSidebarBtn.addEventListener('click', () => {
+  filterSidebar.classList.remove('open');
+});
+
+seeResult.addEventListener("click", ()=>{
+  filterSidebar.classList.remove('open');
+});
+clearFiltersBtn.addEventListener("click", () => {
+  // Uncheck all category checkboxes
+  categoryCheckboxes.forEach((checkbox) => {
+    checkbox.checked = false;
+  });
+  // Reset the search bar
+  searchBar.value = "";
+  // Reset filteredProducts and displayedProducts to show all products
+  filteredProducts = productList.slice();
+  currentIndex = itemsPerPage;
+  displayedProducts = filteredProducts.slice(0, currentIndex);
+
+  // Display all products
+  displayProducts(displayedProducts);
+});
 // Function to show shimmer
 function showShimmer() {
   shimmerWrapper.style.display = "grid";
@@ -77,6 +114,7 @@ showShimmer();
 function displayProducts(products) {
   productListArea.innerHTML = products.map(createProductHTML).join("");
   productCount.innerText = filteredProducts.length;
+  resultCount.innerText = filteredProducts.length;
 
   // Toggle Load More button visibility
   loadMoreBtn.style.display =
@@ -104,6 +142,7 @@ function filterProductsByCategory() {
     .filter((checkbox) => checkbox.checked)
     .map((checkbox) => checkbox.name);
   searchBar.value = "";
+  MobSearchBar.value = "";
   filteredProducts = productList.filter((product) =>
     selectedCategories.length > 0
       ? selectedCategories.includes(product.category)
@@ -152,6 +191,30 @@ function searchProducts() {
   loadMoreBtn.style.display =
     filteredProducts.length > currentIndex ? "block" : "none";
 }
+function MobileSearchProducts() {
+  const inputTitle = MobSearchBar.value.toLowerCase();
+  //all checkbox unchecked
+  categoryCheckboxes.forEach((checkbox) => {
+    checkbox.checked = false;
+  });
+  // Filter products based on the search inputTitle
+  filteredProducts = productList.filter(
+    (product) => product.title.toLowerCase().includes(inputTitle)
+    // ||
+    //   product.description.toLowerCase().includes(inputTitle)
+  );
+
+  // Reset currentIndex and displayedProducts based on the search results
+  currentIndex = itemsPerPage;
+  displayedProducts = filteredProducts.slice(0, currentIndex);
+
+  // Update the display with the searched products
+  displayProducts(displayedProducts);
+
+  // Adjust the visibility of the Load More button based on the results
+  loadMoreBtn.style.display =
+    filteredProducts.length > currentIndex ? "block" : "none";
+}
 
 function sortProducts(order) {
   if (order === "lowToHigh") {
@@ -174,12 +237,7 @@ function loadMoreProducts() {
   loadMoreBtn.style.display =
     currentIndex >= filteredProducts.length ? "none" : "block";
 }
-// function handleError(error) {
-//   console.error("An error occurred:", error);
-//   displayErrorMessage(
-//     "Something went wrong while fetching data. Please try again later."
-//   );
-// }
+
 
 function handleError(error) {
   if (error.name === "TypeError") {
@@ -203,6 +261,7 @@ function handleError(error) {
 
 function displayErrorMessage(message) {
   productCount.innerText = 0;
+  resultCount.innerText = 0;
   productListArea.innerHTML = `<div class="error-message">${message}</div>`;
 }
 

@@ -62,6 +62,25 @@
             </div>
           </div>
         </div>
+        <div class="m-nav-section">
+          <ul class="nav-list">
+            <li class="nav-item active">
+              <a href="#" class="nav-link">Home</a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">Women</a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">Men</a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">Smart Gear</a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">Accessories</a>
+            </li>
+          </ul>
+        </div>
       </header>
       <div class="content-area">
         <div class="banner-area">
@@ -80,8 +99,14 @@
                 </p>
               </div>
             </div>
-            <div class="filters">
-              <h3>Filters</h3>
+            <div id="filter-sidebar" class="m-filter-section">
+            <div class="filters" id="filters">
+              <h3>Filters  <div class="close-btn">
+                <svg id="closeSidebar" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                  <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"></path>
+                </svg>
+              </div></h3>
+              <button id="clearAllFilter">Clear all</button>
               <p>Categories</p>
               <div class="input-area">
                 <label for="jewellery" class="custom-checkbox">
@@ -121,12 +146,47 @@
                   <span>Women's Clothing</span>
                 </label>
               </div>
+              <button id="see-result">
+                see <span id="resultNumber"></span> results
+              </button>
+            </div>
             </div>
           </div>
           <div class="products-list">
             <div class="sort-and-result">
+              <div class="m-filter-and-breadcrumb">
+                <div class="breadcrumb-text">
+                  <p>
+                    <span>Clothing</span> / <span>Womens</span> /
+                    <span class="color-faint">Outerwear</span>
+                  </p>
+                </div>
+                <div class="filter-buttons">
+                  <div class="filter-btn" id="filter-result">
+                    <svg  width="16" height="16" fill="currentColor" class="bi bi-funnel" viewBox="0 0 16 16">
+                      <path d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5zm1 .5v1.308l4.372 4.858A.5.5 0 0 1 7 8.5v5.306l2-.666V8.5a.5.5 0 0 1 .128-.334L13.5 3.308V2z"></path>
+                    </svg> Filter Results
+                  </div>
+                  <div class="filter-btn" id="filter-by-order">
+                    <svg  width="16" height="16" fill="currentColor" class="bi bi-arrow-down-up" viewBox="0 0 16 16">
+                      <path fill-rule="evenodd" d="M11.5 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L11 2.707V14.5a.5.5 0 0 0 .5.5m-7-14a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L4 13.293V1.5a.5.5 0 0 1 .5-.5"></path>
+                    </svg>
+                      <select id="newSortingDropdown">
+                        <option value="lowToHigh">Low to High</option>
+                        <option value="highToLow">High to Low</option>
+                        <option value="AtoZ">Title: A to Z</option>
+                        <option value="ZtoA">Title: Z to A</option>
+                      </select>
+                  </div>
+                </div>
+              </div>
               <div class="result-test">
-                <span id="result-count"></span> Results
+                <p><span id="result-count"></span> Results</p>
+                <input
+                type="text"
+                id="m-search-by-title"
+                placeholder="Search products..."
+              />
               </div>
               <div class="sort-filter">
                 <input
@@ -157,6 +217,7 @@
                   </g>
                 </svg>
               </div>
+              
             </div>
             <div class="product-grid-area" id="product-grid-area">
               <div id="shimmer-wrapper">
@@ -263,6 +324,7 @@
           </div>
         </div>
       </footer>
+      
     </div>
     <script src="./main.js"></script>
   </body>
