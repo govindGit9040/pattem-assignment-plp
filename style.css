@@ -1019,6 +1019,7 @@ div#shimmer-wrapper {
     width: max-content;
     padding: 0 20px 0;
     border: 0;
+    z-index: 8;
     text-decoration: underline;
     background: transparent;
     font-weight: 600;
